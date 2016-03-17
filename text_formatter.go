@@ -68,6 +68,11 @@ func (f *TextFormatter) Format(entry *Entry) ([]byte, error) {
 
 	b := &bytes.Buffer{}
 
+	if len(entry.ServiceIdentifier) > 0 {
+		b.WriteString(entry.ServiceIdentifier)
+		b.WriteByte(' ')
+	}
+
 	prefixFieldClashes(entry.Data)
 
 	isColorTerminal := isTerminal && (runtime.GOOS != "windows")

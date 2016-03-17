@@ -35,6 +35,9 @@ type Entry struct {
 
 	// User-defined tags (used in Sentry)
 	Tags map[string]string
+
+	// Service identifier for internal use
+	ServiceIdentifier string
 }
 
 func NewEntry(logger *Logger) *Entry {
