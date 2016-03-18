@@ -88,7 +88,8 @@ func (f *TextFormatter) Format(entry *Entry) ([]byte, error) {
 		if !f.DisableTimestamp {
 			f.appendKeyValue(b, "time", entry.Time.Format(timestampFormat))
 		}
-		f.appendKeyValue(b, "level", strings.ToUpper(entry.Level.String()))
+		f.appendKeyValue(b, "level", entry.Level.String())
+		f.appendKeyValue(b, "log_level", strings.ToUpper(entry.Level.String()))
 		if entry.Message != "" {
 			f.appendKeyValue(b, "msg", entry.Message)
 		}
