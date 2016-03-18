@@ -86,7 +86,7 @@ func (f *TextFormatter) Format(entry *Entry) ([]byte, error) {
 		f.printColored(b, entry, keys, timestampFormat)
 	} else {
 		if !f.DisableTimestamp {
-			f.appendKeyValue(b, "time", entry.Time.Format(timestampFormat))
+			f.appendKeyValue(b, "time", entry.Time.UTC().Format(timestampFormat))
 		}
 		f.appendKeyValue(b, "level", entry.Level.String())
 		f.appendKeyValue(b, "log_level", strings.ToUpper(entry.Level.String()))
