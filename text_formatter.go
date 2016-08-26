@@ -88,7 +88,8 @@ func (f *TextFormatter) Format(entry *Entry) ([]byte, error) {
 		if !f.DisableTimestamp {
 			f.appendKeyValue(b, "time", entry.Time.UTC().Format(timestampFormat))
 		}
-		f.appendKeyValue(b, "level", entry.Level.String())
+		// remove the leve, since we have the log_level VS-862
+		//f.appendKeyValue(b, "level", entry.Level.String())
 		f.appendKeyValue(b, "log_level", strings.ToUpper(entry.Level.String()))
 		if entry.Message != "" {
 			f.appendKeyValue(b, "msg", entry.Message)
