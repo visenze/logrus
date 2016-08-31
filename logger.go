@@ -82,6 +82,12 @@ func (logger *Logger) Infof(format string, args ...interface{}) {
 	}
 }
 
+func (logger *Logger) Metricf(format string, args ...interface{}) {
+	if logger.Level >= MetricLevel {
+		NewEntry(logger).Metricf(format, args...)
+	}
+}
+
 func (logger *Logger) Printf(format string, args ...interface{}) {
 	NewEntry(logger).Printf(format, args...)
 }
@@ -129,6 +135,12 @@ func (logger *Logger) Info(args ...interface{}) {
 	}
 }
 
+func (logger *Logger) Metric(args ...interface{}) {
+	if logger.Level >= MetricLevel {
+		NewEntry(logger).Metric(args...)
+	}
+}
+
 func (logger *Logger) Print(args ...interface{}) {
 	NewEntry(logger).Info(args...)
 }
@@ -173,6 +185,12 @@ func (logger *Logger) Debugln(args ...interface{}) {
 func (logger *Logger) Infoln(args ...interface{}) {
 	if logger.Level >= InfoLevel {
 		NewEntry(logger).Infoln(args...)
+	}
+}
+
+func (logger *Logger) Metricln(args ...interface{}) {
+	if logger.Level >= MetricLevel {
+		NewEntry(logger).Metricln(args...)
 	}
 }
 
