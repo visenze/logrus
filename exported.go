@@ -87,6 +87,11 @@ func Info(args ...interface{}) {
 	std.Info(args...)
 }
 
+// Metric logs a message at level Metric on the standard logger.
+func Metric(args ...interface{}) {
+	std.Metric(args...)
+}
+
 // Warn logs a message at level Warn on the standard logger.
 func Warn(args ...interface{}) {
 	std.Warn(args...)
@@ -127,6 +132,11 @@ func Infof(format string, args ...interface{}) {
 	std.Infof(format, args...)
 }
 
+// Metricf logs a message at level Metric on the standard logger.
+func Metricf(format string, args ...interface{}) {
+	std.Metricf(format, args...)
+}
+
 // Warnf logs a message at level Warn on the standard logger.
 func Warnf(format string, args ...interface{}) {
 	std.Warnf(format, args...)
@@ -165,6 +175,11 @@ func Println(args ...interface{}) {
 // Infoln logs a message at level Info on the standard logger.
 func Infoln(args ...interface{}) {
 	std.Infoln(args...)
+}
+
+// Metricln logs a message at level Metric on the standard logger.
+func Metricln(args ...interface{}) {
+	std.Metricln(args...)
 }
 
 // Warnln logs a message at level Warn on the standard logger.

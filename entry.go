@@ -157,6 +157,12 @@ func (entry *Entry) Info(args ...interface{}) {
 	}
 }
 
+func (entry *Entry) Metric(args ...interface{}) {
+	if entry.Logger.Level >= MetricLevel {
+		entry.log(MetricLevel, fmt.Sprint(args...))
+	}
+}
+
 func (entry *Entry) Warn(args ...interface{}) {
 	if entry.Logger.Level >= WarnLevel {
 		entry.log(WarnLevel, fmt.Sprint(args...))
@@ -198,6 +204,12 @@ func (entry *Entry) Debugf(format string, args ...interface{}) {
 func (entry *Entry) Infof(format string, args ...interface{}) {
 	if entry.Logger.Level >= InfoLevel {
 		entry.Info(fmt.Sprintf(format, args...))
+	}
+}
+
+func (entry *Entry) Metricf(format string, args ...interface{}) {
+	if entry.Logger.Level >= MetricLevel {
+		entry.Metric(fmt.Sprintf(format, args...))
 	}
 }
 
@@ -245,6 +257,12 @@ func (entry *Entry) Debugln(args ...interface{}) {
 func (entry *Entry) Infoln(args ...interface{}) {
 	if entry.Logger.Level >= InfoLevel {
 		entry.Info(entry.sprintlnn(args...))
+	}
+}
+
+func (entry *Entry) Metricln(args ...interface{}) {
+	if entry.Logger.Level >= MetricLevel {
+		entry.Metric(entry.sprintlnn(args...))
 	}
 }
 

@@ -18,6 +18,8 @@ func (level Level) String() string {
 		return "debug"
 	case InfoLevel:
 		return "info"
+	case MetricLevel:
+		return "metric"
 	case WarnLevel:
 		return "warning"
 	case ErrorLevel:
@@ -42,6 +44,8 @@ func ParseLevel(lvl string) (Level, error) {
 		return ErrorLevel, nil
 	case "warn", "warning":
 		return WarnLevel, nil
+	case "metric":
+		return MetricLevel, nil
 	case "info":
 		return InfoLevel, nil
 	case "debug":
@@ -66,6 +70,9 @@ const (
 	ErrorLevel
 	// WarnLevel level. Non-critical entries that deserve eyes.
 	WarnLevel
+	// MetricLevel level, General operational entries about the metrics inside the
+	// application.
+	MetricLevel
 	// InfoLevel level. General operational entries about what's going on inside the
 	// application.
 	InfoLevel
