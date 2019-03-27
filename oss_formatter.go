@@ -50,7 +50,7 @@ func (f *OSSFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 	b.WriteString(fmt.Sprintf(" msg='''%s'''", entry.Message))
 	b.WriteByte(' ')
 	for key, value := range entry.Data {
-		f.appendKeyValue(b, key, value)
+		appendKeyValue(b, key, value)
 	}
 	b.WriteByte('\n')
 	return b.Bytes(), nil
@@ -63,27 +63,3 @@ type Option func(*Formatter) error
 
 // TimestampFormat for Visenze logging
 const TimestampFormat = "2006-01-02T15:04:05.000Z"
-
-func (f *OSSFormatter) appendKeyValue(b *bytes.Buffer, key string, value interface{}) {
-	b.WriteString(key)
-	b.WriteByte('=')
-	switch value := value.(type) {
-	case string:
-		if needsQuoting(value) {
-			b.WriteString(value)
-		} else {
-			fmt.Fprintf(b, "%q", value)
-		}
-	case error:
-		errmsg := value.Error()
-		if needsQuoting(errmsg) {
-			b.WriteString(errmsg)
-		} else {
-			fmt.Fprintf(b, "%q", value)
-		}
-	default:
-		fmt.Fprint(b, value)
-	}
-
-	b.WriteByte(' ')
-}

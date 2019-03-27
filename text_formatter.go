@@ -86,16 +86,16 @@ func (f *TextFormatter) Format(entry *Entry) ([]byte, error) {
 		f.printColored(b, entry, keys, timestampFormat)
 	} else {
 		if !f.DisableTimestamp {
-			f.appendKeyValue(b, "time", entry.Time.UTC().Format(timestampFormat))
+			appendKeyValue(b, "time", entry.Time.UTC().Format(timestampFormat))
 		}
 		// remove the leve, since we have the log_level VS-862
 		//f.appendKeyValue(b, "level", entry.Level.String())
-		f.appendKeyValue(b, "log_level", strings.ToUpper(entry.Level.String()))
+		appendKeyValue(b, "log_level", strings.ToUpper(entry.Level.String()))
 		if entry.Message != "" {
-			f.appendKeyValue(b, "msg", entry.Message)
+			appendKeyValue(b, "msg", entry.Message)
 		}
 		for _, key := range keys {
-			f.appendKeyValue(b, key, entry.Data[key])
+			appendKeyValue(b, key, entry.Data[key])
 		}
 	}
 
@@ -141,7 +141,7 @@ func needsQuoting(text string) bool {
 	return true
 }
 
-func (f *TextFormatter) appendKeyValue(b *bytes.Buffer, key string, value interface{}) {
+func appendKeyValue(b *bytes.Buffer, key string, value interface{}) {
 
 	b.WriteString(key)
 	b.WriteByte('=')
