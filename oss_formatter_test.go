@@ -2,11 +2,12 @@ package logrus_test
 
 import (
 	"fmt"
+	"testing"
+	"time"
+
 	"github.com/sirupsen/logrus"
 	. "github.com/smartystreets/goconvey/convey"
 	this "github.com/visenze/logrus"
-	"testing"
-	"time"
 )
 
 const (
@@ -47,10 +48,11 @@ func TestFormatter_Format(t *testing.T) {
 				Level:   logrus.InfoLevel,
 				Message: "hello",
 				Data: logrus.Fields{
-					"total_time": 56,
-					"tag_group":  "qrcode",
-					"rpc_error":  nil,
-					"remote":     "remote-qrcode-2-shared.recognition-worker:9010",
+					"total_time":   56,
+					"tag_group":    "qrcode",
+					"rpc_error":    nil,
+					"remote":       "remote-qrcode-2-shared.recognition-worker:9010",
+					"grpc.time_ms": 200,
 				}},
 			)
 			Convey("There should be no error", func() {
@@ -82,6 +84,9 @@ func TestFormatter_Format(t *testing.T) {
 			})
 			Convey("The message must contain the remote quoted", func() {
 				So(string(res), ShouldContainSubstring, "remote=\"remote-qrcode-2-shared.recognition-worker:9010\"")
+			})
+			Convey("The message must contain the grpc_time_ms (replaced the . with a _)", func() {
+				So(string(res), ShouldContainSubstring, "grpc_time_ms=200")
 			})
 		})
 	})
