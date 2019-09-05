@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 )
 
 // OSSFormatter implementing the open source logrus.Formatter
@@ -50,10 +51,14 @@ func (f *OSSFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 	b.WriteString(fmt.Sprintf(" msg='''%s'''", entry.Message))
 	b.WriteByte(' ')
 	for key, value := range entry.Data {
-		appendKeyValue(b, key, value)
+		appendKeyValue(b, replaceInvalidChars(key), value)
 	}
 	b.WriteByte('\n')
 	return b.Bytes(), nil
+}
+
+func replaceInvalidChars(content string) string {
+	return strings.ReplaceAll(content, ".", "_")
 }
 
 var _ logrus.Formatter = (*OSSFormatter)(nil)
