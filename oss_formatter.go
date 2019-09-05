@@ -58,7 +58,7 @@ func (f *OSSFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 }
 
 func replaceInvalidChars(content string) string {
-	return strings.ReplaceAll(content, ".", "_")
+	return strings.Replace(content, ".", "_", -1)
 }
 
 var _ logrus.Formatter = (*OSSFormatter)(nil)
