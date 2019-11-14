@@ -53,6 +53,7 @@ func TestFormatter_Format(t *testing.T) {
 					"rpc_error":    nil,
 					"remote":       "remote-qrcode-2-shared.recognition-worker:9010",
 					"grpc.time_ms": 200,
+					"vtt_source":   "",
 				}},
 			)
 			Convey("There should be no error", func() {
@@ -80,13 +81,16 @@ func TestFormatter_Format(t *testing.T) {
 				So(string(res), ShouldContainSubstring, "tag_group=qrcode")
 			})
 			Convey("The message must contain the rpc_error", func() {
-				So(string(res), ShouldContainSubstring, "rpc_error=<nil>")
+				So(string(res), ShouldContainSubstring, "rpc_error=\"<nil>\"")
 			})
 			Convey("The message must contain the remote quoted", func() {
 				So(string(res), ShouldContainSubstring, "remote=\"remote-qrcode-2-shared.recognition-worker:9010\"")
 			})
 			Convey("The message must contain the grpc_time_ms (replaced the . with a _)", func() {
 				So(string(res), ShouldContainSubstring, "grpc_time_ms=200")
+			})
+			Convey("The message must quote the vtt_source empty string", func() {
+				So(string(res), ShouldContainSubstring, "vtt_source=\"\"")
 			})
 		})
 	})
