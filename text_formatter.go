@@ -130,39 +130,38 @@ func (f *TextFormatter) printColored(b *bytes.Buffer, entry *Entry, keys []strin
 }
 
 func needsQuoting(text string) bool {
+	if len(text) == 0 {
+		return true
+	}
 	for _, ch := range text {
 		if !((ch >= 'a' && ch <= 'z') ||
 			(ch >= 'A' && ch <= 'Z') ||
 			(ch >= '0' && ch <= '9') ||
 			ch == '-' || ch == '.') {
-			return false
+			return true
 		}
 	}
-	return true
+	return false
 }
 
 func appendKeyValue(b *bytes.Buffer, key string, value interface{}) {
-
+	if b.Len() > 0 {
+		b.WriteByte(' ')
+	}
 	b.WriteString(key)
 	b.WriteByte('=')
+	appendValue(b, value)
+}
 
-	switch value := value.(type) {
-	case string:
-		if needsQuoting(value) {
-			b.WriteString(value)
-		} else {
-			fmt.Fprintf(b, "%q", value)
-		}
-	case error:
-		errmsg := value.Error()
-		if needsQuoting(errmsg) {
-			b.WriteString(errmsg)
-		} else {
-			fmt.Fprintf(b, "%q", value)
-		}
-	default:
-		fmt.Fprint(b, value)
+func appendValue(b *bytes.Buffer, value interface{}) {
+	stringVal, ok := value.(string)
+	if !ok {
+		stringVal = fmt.Sprint(value)
 	}
 
-	b.WriteByte(' ')
+	if !needsQuoting(stringVal) {
+		b.WriteString(stringVal)
+	} else {
+		b.WriteString(fmt.Sprintf("%q", stringVal))
+	}
 }
